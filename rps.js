@@ -44,13 +44,33 @@ function playRound(playerSelection, computerSelection) {
   }
 }
 
+function getPlayerChoice() {
+  let validInput = false;
+  let playerInput = prompt('Rock, paper, or scissors? Which do you choose?');
+  for (let i = 0; i < 5; i++) {
+    switch (playerInput.toLowerCase()) {
+      case 'rock':
+      case 'paper':
+      case 'scissors':
+        return playerInput;
+      case 'exit':
+        return 'fail';
+      default:
+        playerInput = prompt('Please try again.\nTo exit, type "exit".\nRock, paper, or scissors? Which do you choose?');
+    }
+  }
+  console.log('Too many invalid inputs. Game over.');
+  return 'fail';
+}
+
 function game() {
-  let playerInput;
+  let playerChoice;
   let computerChoice;
   for (let i = 0; i < 5; i++) {
-    playerInput = prompt('Rock, paper, or scissors? Which do you choose?');
+    playerChoice = getPlayerChoice();
     computerChoice = getComputerChoice();
-    let gameResult = playRound(playerInput, computerChoice);
+    if (playerChoice == 'fail') break;
+    let gameResult = playRound(playerChoice, computerChoice);
     console.log(gameResult);
   }
 }
