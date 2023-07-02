@@ -43,3 +43,14 @@ function playRound(playerSelection, computerSelection) {
     return `You win! ${capitalize(playerSelection)} beats ${computerSelection}.`;
   }
 }
+
+function game() {
+  let playerInput;
+  let computerChoice;
+  for (let i = 0; i < 5; i++) {
+    playerInput = prompt('Rock, paper, or scissors? Which do you choose?');
+    computerChoice = getComputerChoice();
+    let gameResult = playRound(playerInput, computerChoice);
+    console.log(gameResult);
+  }
+}
