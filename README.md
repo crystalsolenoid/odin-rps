@@ -1,2 +1,2 @@
-# odin-rps
-Rock paper scissors for The Odin Project
+# Rock Paper Scissors
+Rock paper scissors implemented for JavaScript practice as part of [The Odin Project](https://www.theodinproject.com)
