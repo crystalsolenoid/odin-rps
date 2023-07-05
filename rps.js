@@ -14,8 +14,6 @@ function getComputerChoice() {
 let capitalize = s => s.slice(0,1).toUpperCase() + s.slice(1).toLowerCase();
 
 function playRound(playerSelection, computerSelection) {
-  // clean player input. should be refactored later.
-  playerSelection = playerSelection.toLowerCase();
   // handle ties first because they're easy.
   if (playerSelection === computerSelection) {
     return `It's a tie! Both ${playerSelection}.`;
@@ -44,35 +42,7 @@ function playRound(playerSelection, computerSelection) {
   }
 }
 
-function getPlayerChoice() {
-  let validInput = false;
-  let playerInput = prompt('Rock, paper, or scissors? Which do you choose?');
-  for (let i = 0; i < 5; i++) {
-    switch (playerInput.toLowerCase()) {
-      case 'rock':
-      case 'paper':
-      case 'scissors':
-        return playerInput;
-      case 'exit':
-        return 'fail';
-      default:
-        playerInput = prompt('Please try again.\nTo exit, type "exit".\nRock, paper, or scissors? Which do you choose?');
-    }
-  }
-  console.log('Too many invalid inputs. Game over.');
-  return 'fail';
-}
-
 function game() {
-  let playerChoice;
-  let computerChoice;
-  for (let i = 0; i < 5; i++) {
-    playerChoice = getPlayerChoice();
-    computerChoice = getComputerChoice();
-    if (playerChoice == 'fail') break;
-    let gameResult = playRound(playerChoice, computerChoice);
-    console.log(gameResult);
-  }
 }
 
 const messageWindow = document.querySelector('#gameMessage');
@@ -82,8 +52,8 @@ const paperButton = document.querySelector('#paper');
 choiceButtons = [rockButton, scissorsButton, paperButton];
 
 function handleChoice(event) {
-  playerChoice = this.getAttribute('id');
-  computerChoice = getComputerChoice();
+  let playerChoice = this.getAttribute('id');
+  let computerChoice = getComputerChoice();
   let gameResult = playRound(playerChoice, computerChoice);
   messageWindow.textContent = gameResult;
 }
