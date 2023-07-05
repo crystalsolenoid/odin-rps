@@ -79,6 +79,7 @@ function checkGameOver(scores) {
 function gameOver(won) {
   messageWindow.textContent = `You ${won? 'won' : 'lost'} the game${won? '!':'...'}`;
   resetButton.hidden = false;
+  choiceButtons.forEach(btn => btn.removeEventListener('click', handleChoice));
 }
 
 let scores;
@@ -87,6 +88,7 @@ function resetGame() {
   scores = {player: 0, computer: 0};
   updateScoreboard(scores);
   resetButton.hidden = true;
+  choiceButtons.forEach(btn => btn.addEventListener('click', handleChoice));
 }
 
 const maxRounds = 5;
