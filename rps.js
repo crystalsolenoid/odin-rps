@@ -74,3 +74,17 @@ function game() {
     console.log(gameResult);
   }
 }
+
+const rockButton = document.querySelector('#rock');
+const scissorsButton = document.querySelector('#scissors');
+const paperButton = document.querySelector('#paper');
+choiceButtons = [rockButton, scissorsButton, paperButton];
+
+function handleChoice(event) {
+  playerChoice = this.getAttribute('id');
+  computerChoice = getComputerChoice();
+  let gameResult = playRound(playerChoice, computerChoice);
+  alert(gameResult);
+}
+
+choiceButtons.forEach(btn => btn.addEventListener('click', handleChoice));
