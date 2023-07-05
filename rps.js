@@ -40,14 +40,21 @@ function evaluateRound(playerSelection, computerSelection) {
   }
 }
 
+function updateScoreboard(scores) {
+  scoreDisplays.player.textContent = scores.player;
+  scoreDisplays.computer.textContent = scores.computer;
+}
+
 function reportRound(result, playerSelection, computerSelection) { 
   let roundMessage = '';
   switch (result) {
     case 'win':
       roundMessage = `You win! ${capitalize(playerSelection)} beats ${computerSelection}.`;
+      scores.player += 1;
       break;
     case 'loss':
       roundMessage = `You lose! ${capitalize(computerSelection)} beats ${playerSelection}.`;
+      scores.computer += 1;
       break;
     case 'tie':
       roundMessage = `It's a tie! Both ${playerSelection}.`;
@@ -56,12 +63,24 @@ function reportRound(result, playerSelection, computerSelection) {
       roundMessage = 'Something went wrong...';
   }
   messageWindow.textContent = roundMessage;
+  updateScoreboard(scores);
 }
 
+function handleChoice(event) {
+  let playerChoice = this.getAttribute('id');
+  playRound(playerChoice);
+}
+
+let scores;
 function game() {
+  scores = {player: 0, computer: 0};
+  updateScoreboard(scores);
 }
 
 const messageWindow = document.querySelector('#gameMessage');
+const playerScore = document.querySelector('#playerScore');
+const computerScore = document.querySelector('#computerScore');
+scoreDisplays = {player: playerScore, computer: computerScore};
 
 const rockButton = document.querySelector('#rock');
 const scissorsButton = document.querySelector('#scissors');
@@ -70,7 +89,4 @@ choiceButtons = [rockButton, scissorsButton, paperButton];
 
 choiceButtons.forEach(btn => btn.addEventListener('click', handleChoice));
 
-function handleChoice(event) {
-  let playerChoice = this.getAttribute('id');
-  playRound(playerChoice);
-}
+game();
