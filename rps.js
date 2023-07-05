@@ -78,12 +78,15 @@ function checkGameOver(scores) {
 
 function gameOver(won) {
   messageWindow.textContent = `You ${won? 'won' : 'lost'} the game${won? '!':'...'}`;
+  resetButton.hidden = false;
 }
 
 let scores;
-function game() {
+function resetGame() {
+  messageWindow.textContent = 'Choose a move to get started.';
   scores = {player: 0, computer: 0};
   updateScoreboard(scores);
+  resetButton.hidden = true;
 }
 
 const maxRounds = 5;
@@ -98,6 +101,9 @@ const scissorsButton = document.querySelector('#scissors');
 const paperButton = document.querySelector('#paper');
 choiceButtons = [rockButton, scissorsButton, paperButton];
 
-choiceButtons.forEach(btn => btn.addEventListener('click', handleChoice));
+const resetButton = document.querySelector('#reset');
 
-game();
+choiceButtons.forEach(btn => btn.addEventListener('click', handleChoice));
+resetButton.addEventListener('click', resetGame);
+
+resetGame();
