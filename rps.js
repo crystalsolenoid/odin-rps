@@ -75,6 +75,7 @@ function game() {
   }
 }
 
+const messageWindow = document.querySelector('#gameMessage');
 const rockButton = document.querySelector('#rock');
 const scissorsButton = document.querySelector('#scissors');
 const paperButton = document.querySelector('#paper');
@@ -84,7 +85,7 @@ function handleChoice(event) {
   playerChoice = this.getAttribute('id');
   computerChoice = getComputerChoice();
   let gameResult = playRound(playerChoice, computerChoice);
-  alert(gameResult);
+  messageWindow.textContent = gameResult;
 }
 
 choiceButtons.forEach(btn => btn.addEventListener('click', handleChoice));
