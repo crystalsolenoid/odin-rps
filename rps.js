@@ -16,7 +16,7 @@ let capitalize = s => s.slice(0,1).toUpperCase() + s.slice(1).toLowerCase();
 function playRound(playerSelection, computerSelection) {
   // handle ties first because they're easy.
   if (playerSelection === computerSelection) {
-    return `It's a tie! Both ${playerSelection}.`;
+    return 'tie';
   }
   // to handle the rest, first identify if the player wins or loses,
   // then remember and build the message from that.
@@ -26,36 +26,48 @@ function playRound(playerSelection, computerSelection) {
     case 'rockpaper':
     case 'paperscissors':
     case 'scissorsrock':
-      result = 'loss';
-      break;
+      return 'loss';
     case 'paperrock':
     case 'scissorspaper':
     case 'rockscissors':
-      result = 'win';
+      return 'win';
+  }
+}
+
+function reportRound(result, playerSelection, computerSelection) { 
+  let roundMessage = '';
+  switch (result) {
+    case 'win':
+      roundMessage = `You win! ${capitalize(playerSelection)} beats ${computerSelection}.`;
       break;
+    case 'loss':
+      roundMessage = `You lose! ${capitalize(computerSelection)} beats ${playerSelection}.`;
+      break;
+    case 'tie':
+      roundMessage = `It's a tie! Both ${playerSelection}.`;
+      break;
+    default:
+      roundMessage = 'Something went wrong...';
   }
-  // knowing who chose what an if it's a loss or win, we can now build the messages
-  if (result === 'loss') {
-    return `You lose! ${capitalize(computerSelection)} beats ${playerSelection}.`;
-  } else {
-    return `You win! ${capitalize(playerSelection)} beats ${computerSelection}.`;
-  }
+  messageWindow.textContent = roundMessage;
 }
 
 function game() {
 }
 
 const messageWindow = document.querySelector('#gameMessage');
+
 const rockButton = document.querySelector('#rock');
 const scissorsButton = document.querySelector('#scissors');
 const paperButton = document.querySelector('#paper');
 choiceButtons = [rockButton, scissorsButton, paperButton];
 
+choiceButtons.forEach(btn => btn.addEventListener('click', handleChoice));
+
 function handleChoice(event) {
   let playerChoice = this.getAttribute('id');
   let computerChoice = getComputerChoice();
   let gameResult = playRound(playerChoice, computerChoice);
-  messageWindow.textContent = gameResult;
+  reportRound(gameResult, playerChoice, computerChoice);
 }
 
-choiceButtons.forEach(btn => btn.addEventListener('click', handleChoice));
