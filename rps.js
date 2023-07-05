@@ -13,6 +13,11 @@ function getComputerChoice() {
 // making the rest lowercase
 let capitalize = s => s.slice(0,1).toUpperCase() + s.slice(1).toLowerCase();
 
+function handleChoice(event) {
+  let playerChoice = this.getAttribute('id');
+  playRound(playerChoice);
+}
+
 function playRound(playerChoice) {
   let computerChoice = getComputerChoice();
   let gameResult = evaluateRound(playerChoice, computerChoice);
@@ -64,11 +69,15 @@ function reportRound(result, playerSelection, computerSelection) {
   }
   messageWindow.textContent = roundMessage;
   updateScoreboard(scores);
+  checkGameOver(scores);
 }
 
-function handleChoice(event) {
-  let playerChoice = this.getAttribute('id');
-  playRound(playerChoice);
+function checkGameOver(scores) {
+  if (scores.player >= maxRounds || scores.computer >= maxRounds) gameOver(scores.player > scores.computer);
+}
+
+function gameOver(won) {
+  messageWindow.textContent = `You ${won? 'won' : 'lost'} the game${won? '!':'...'}`;
 }
 
 let scores;
@@ -76,6 +85,8 @@ function game() {
   scores = {player: 0, computer: 0};
   updateScoreboard(scores);
 }
+
+const maxRounds = 5;
 
 const messageWindow = document.querySelector('#gameMessage');
 const playerScore = document.querySelector('#playerScore');
