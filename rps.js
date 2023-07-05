@@ -13,7 +13,13 @@ function getComputerChoice() {
 // making the rest lowercase
 let capitalize = s => s.slice(0,1).toUpperCase() + s.slice(1).toLowerCase();
 
-function playRound(playerSelection, computerSelection) {
+function playRound(playerChoice) {
+  let computerChoice = getComputerChoice();
+  let gameResult = evaluateRound(playerChoice, computerChoice);
+  reportRound(gameResult, playerChoice, computerChoice);
+}
+
+function evaluateRound(playerSelection, computerSelection) {
   // handle ties first because they're easy.
   if (playerSelection === computerSelection) {
     return 'tie';
@@ -66,8 +72,5 @@ choiceButtons.forEach(btn => btn.addEventListener('click', handleChoice));
 
 function handleChoice(event) {
   let playerChoice = this.getAttribute('id');
-  let computerChoice = getComputerChoice();
-  let gameResult = playRound(playerChoice, computerChoice);
-  reportRound(gameResult, playerChoice, computerChoice);
+  playRound(playerChoice);
 }
-
